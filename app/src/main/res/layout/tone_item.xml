@@ -1,5 +1,42 @@
-<RelativeLayout android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/padding_10"
+    android:layout_marginBottom="@dimen/padding_10"
+    android:layout_marginStart="@dimen/padding_10"
+    android:layout_marginEnd="@dimen/padding_10"
+    android:gravity="center"
+    android:weightSum="6">
 
-</RelativeLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/width_tone"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imgToneItem"
+            android:layout_width="@dimen/width_tone"
+            android:layout_height="@dimen/width_tone"
+            android:scaleType="centerCrop" />
+    </LinearLayout>
+
+    <SeekBar
+        android:thumbTint="@color/white"
+        android:outlineSpotShadowColor="@color/white"
+        android:outlineAmbientShadowColor="@color/white"
+        android:id="@+id/sbValueTone"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/width_tone"
+        android:layout_weight="4" />
+
+    <TextView
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:id="@+id/txtValueTone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+</LinearLayout>

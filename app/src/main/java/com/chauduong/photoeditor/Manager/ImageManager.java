@@ -11,10 +11,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.chauduong.photoeditor.Interface.ImageManagerListener;
 import com.chauduong.photoeditor.Utils.BitmapUtils;
-import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -37,6 +36,13 @@ public class ImageManager {
     private Context mContext;
     private Handler mHandler;
     private Uri filePath;
+    private Bitmap mPreview;
+    private Bitmap mOriginal;
+    private ImageManagerListener mImageManagerListener;
+
+    public void setmImageManagerListener(ImageManagerListener mImageManagerListener) {
+        this.mImageManagerListener = mImageManagerListener;
+    }
 
     public ImageManager(DialogManager mDialogManager, Context mContext) {
         this.mDialogManager = mDialogManager;
@@ -82,11 +88,11 @@ public class ImageManager {
             @Override
             public void run() {
                 Bitmap bitmap = BitmapUtils.getBitmapFromGallery(mContext, filePath, 1);
-                bitmap = Editor.getFilter().processFilter(bitmap.copy(Bitmap.Config.ARGB_8888,true));
+                bitmap = EditorManager.getFilter().processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
                 Filter myFilter = new Filter();
-                myFilter.addSubFilter(new BrightnessSubFilter(Editor.getBrightnessFinal()));
-                myFilter.addSubFilter(new ContrastSubFilter(Editor.getContrastFinal()));
-                myFilter.addSubFilter(new SaturationSubfilter(Editor.getSaturationFinal()));
+                myFilter.addSubFilter(new BrightnessSubFilter(EditorManager.getBrightnessFinal()));
+                myFilter.addSubFilter(new ContrastSubFilter(EditorManager.getContrastFinal()));
+                myFilter.addSubFilter(new SaturationSubfilter(EditorManager.getSaturationFinal()));
                 final Bitmap finalBitmap = myFilter.processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
                 String root = Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES).toString();
@@ -163,4 +169,33 @@ public class ImageManager {
                 });
     }
 
+    public void applyBitmap() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap =mOriginal.copy(Bitmap.Config.ARGB_8888,true);
+                if (EditorManager.getFilter() != null)
+                    bitmap = EditorManager.getFilter().processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+                Filter myFilter = new Filter();
+                myFilter.addSubFilter(new BrightnessSubFilter(EditorManager.getBrightnessFinal()));
+                myFilter.addSubFilter(new ContrastSubFilter(EditorManager.getContrastFinal()));
+                myFilter.addSubFilter(new SaturationSubfilter(EditorManager.getSaturationFinal()));
+                EditorManager.showAllEdit();
+                mPreview = myFilter.processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+                mImageManagerListener.onDoneApply();
+            }
+        }).start();
+    }
+    public Bitmap getPreView(){
+        return mPreview;
+    }
+
+    public void setmOriginal(Bitmap mOriginal) {
+        this.mOriginal = mOriginal;
+    }
+
+    public Bitmap getmOriginal() {
+        return mOriginal;
+    }
 }

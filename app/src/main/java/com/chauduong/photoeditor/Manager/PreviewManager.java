@@ -15,7 +15,7 @@ public class PreviewManager {
 
     public void setImage(Bitmap bitmap) {
         if (imgPreview != null && bitmap != null) {
-            imgPreview.setImageBitmap(bitmap);
+            imgPreview.post(() -> imgPreview.setImageBitmap(bitmap));
         }
     }
 }

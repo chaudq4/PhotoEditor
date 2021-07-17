@@ -26,6 +26,14 @@ public class ThumbnailsAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
     private Context mContext;
     private int selectedIndex = 0;
 
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    public void setSelectedIndex(int selectedIndex) {
+        this.selectedIndex = selectedIndex;
+    }
+
     public ThumbnailsAdapter(List<ThumbnailItem> thumbnailItemList, Context mContext) {
         this.thumbnailItemList = thumbnailItemList;
         this.mContext = mContext;

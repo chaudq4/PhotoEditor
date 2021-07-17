@@ -1,4 +1,4 @@
-package com.chauduong.photoeditor.View;
+package com.chauduong.photoeditor.Fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauduong.photoeditor.Adapter.ThumbnailsAdapter;
 import com.chauduong.photoeditor.Interface.FiltersListFragmentListener;
+import com.chauduong.photoeditor.Interface.MainActivityListener;
 import com.chauduong.photoeditor.Interface.ThumbnailsAdapterListener;
 import com.chauduong.photoeditor.MainActivity;
 import com.chauduong.photoeditor.R;
 import com.chauduong.photoeditor.Utils.BitmapUtils;
+import com.chauduong.photoeditor.View.SpacesItemDecoration;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.utils.ThumbnailItem;
@@ -31,8 +33,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FiltersListFragment extends Fragment implements ThumbnailsAdapterListener {
-    static final int SIZE_THUMBNAIL=50;
+public class FiltersListFragment extends Fragment implements ThumbnailsAdapterListener, MainActivityListener {
+    static final int SIZE_THUMBNAIL=100;
 
     @BindView(R.id.recycler_view)
     RecyclerView rvThumbnail;
@@ -119,5 +121,13 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapterLi
     public void onFilterSelected(Filter filter) {
         if (mFiltersListFragmentListener != null)
             mFiltersListFragmentListener.onFilterSelected(filter);
+    }
+
+    @Override
+    public void onResetClick() {
+        rvThumbnail.scrollToPosition(0);
+        mThumbnailsAdapter.setSelectedIndex(0);
+        mThumbnailsAdapter.notifyDataSetChanged();
+        onFilterSelected(new Filter());
     }
 }
