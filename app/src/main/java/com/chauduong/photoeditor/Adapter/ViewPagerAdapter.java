@@ -21,9 +21,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     private final List<FragmentCustom> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
     private int[] tabIcons = {
-            R.drawable.ic_adjusment,
+            R.drawable.ic_adjustment,
             R.drawable.ic_tone,
             R.drawable.ic_filter,
+            R.drawable.ic_color,
+            R.drawable.ic_effect,
+            R.drawable.ic_detail
     };
     private Context mContext;
 

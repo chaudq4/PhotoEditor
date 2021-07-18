@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.chauduong.photoeditor.Interface.AdjusmentListener;
 import com.chauduong.photoeditor.Interface.MainActivityListener;
@@ -22,11 +21,9 @@ import butterknife.ButterKnife;
 public class AdjusmentFragment extends FragmentCustom implements View.OnClickListener, MainActivityListener {
     Context mContext;
     @BindView(R.id.imbRotate)
-    ImageButton imbRotate;
+    FrameLayout imbRotate;
     @BindView(R.id.imbFlipX)
-    ImageButton imbFlipX;
-    @BindView(R.id.imbFlipY)
-    ImageButton imbFlipY;
+    FrameLayout imbFlipX;
     AdjusmentListener mAdjusmentListener;
 
     public void setmAdjusmentListener(AdjusmentListener mAdjusmentListener) {
@@ -50,7 +47,7 @@ public class AdjusmentFragment extends FragmentCustom implements View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.adjusment_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_adjusment, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -60,7 +57,6 @@ public class AdjusmentFragment extends FragmentCustom implements View.OnClickLis
         super.onViewCreated(view, savedInstanceState);
         imbRotate.setOnClickListener(this);
         imbFlipX.setOnClickListener(this);
-        imbFlipY.setOnClickListener(this);
     }
 
     @Override
@@ -80,14 +76,6 @@ public class AdjusmentFragment extends FragmentCustom implements View.OnClickLis
                 else
                     current = false;
                 mAdjusmentListener.onFlipX(current);
-                break;
-            case R.id.imbFlipY:
-                boolean currentY = EditorManager.isIsFlipY();
-                if (currentY == false)
-                    currentY = true;
-                else
-                    currentY = false;
-                mAdjusmentListener.onFlipY(currentY);
                 break;
         }
     }

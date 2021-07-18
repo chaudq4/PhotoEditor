@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingTop="@dimen/padding_10"
+    android:paddingTop="@dimen/dp30"
     android:weightSum="10"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main">
@@ -15,24 +15,69 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <include layout="@layout/actionbar_layout" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/image_preview"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:scaleType="fitCenter" />
+        android:layout_weight="5">
 
-    <com.chauduong.photoeditor.View.NonSwipeableViewPager
-        android:background="@color/black"
-        android:id="@+id/viewpager"
+        <ImageView
+            android:id="@+id/image_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bg_preview" />
+
+        <LinearLayout
+            android:id="@+id/llSample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please click "
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="open to edit image"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="MissingClass" />
+        android:gravity="bottom">
+
+        <com.chauduong.photoeditor.View.NonSwipeableViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="MissingClass" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/main_button_layout"
@@ -48,6 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             app:tabGravity="fill"
+            app:tabIconTint="@color/colorPrimary"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabMode="fixed" />
     </RelativeLayout>
 

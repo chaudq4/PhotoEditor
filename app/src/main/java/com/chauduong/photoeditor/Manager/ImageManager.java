@@ -172,6 +172,7 @@ public class ImageManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if (mOriginal == null) return;
                 Bitmap original = mOriginal.copy(Bitmap.Config.ARGB_8888, true);
                 Bitmap finalBitmap = applyEditor(original);
                 mPreview = finalBitmap;
@@ -205,17 +206,16 @@ public class ImageManager {
         Matrix matrix = new Matrix();
         matrix.postRotate(EditorManager.getDegress());
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        boolean isFlipX=EditorManager.isIsFilpX();
-        boolean isFlipY=EditorManager.isIsFlipY();
-        Log.i("chau", "applyEditor: "+ isFlipX+" "+ isFlipY);
-        matrix= new Matrix();
-        matrix.postScale(isFlipX ? -1 : 1, isFlipY ? -1 : 1, bitmap.getWidth() / 2f, bitmap.getHeight() / 2f);
+        boolean isFlipX = EditorManager.isIsFilpX();
+        matrix = new Matrix();
+        matrix.postScale(isFlipX ? -1 : 1, 1, bitmap.getWidth() / 2f, bitmap.getHeight() / 2f);
         finalBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return finalBitmap;
     }
-    public void initOriginalBitmap(){
-        if(filePath!=null){
-            mOriginal=BitmapUtils.getBitmapFromGallery(mContext, filePath, SCALE);
+
+    public void initOriginalBitmap() {
+        if (filePath != null) {
+            mOriginal = BitmapUtils.getBitmapFromGallery(mContext, filePath, SCALE);
         }
     }
 }

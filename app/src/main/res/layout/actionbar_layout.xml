@@ -1,79 +1,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     android:gravity="center"
     android:paddingStart="@dimen/padding_10"
     android:paddingEnd="@dimen/padding_10"
-    android:weightSum="6">
-
-    <FrameLayout
-        android:id="@+id/more_menu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_weight="1"
-        android:padding="@dimen/padding_10">
-
-        <ImageView
-            android:id="@+id/imgMore"
-            android:layout_width="@dimen/width_main_button"
-            android:layout_height="@dimen/width_main_button"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_more" />
-    </FrameLayout>
+    android:weightSum="4">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_10">
+        android:orientation="vertical">
 
         <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:id="@+id/imgMore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ripple_skip">
 
-            <TextView
-                android:id="@+id/txtReset"
-                style="@style/ActionbarButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="@dimen/width_main_button"
+                android:layout_height="@dimen/width_main_button"
                 android:layout_gravity="center"
-                android:text="@string/action_reset" />
+                android:src="@drawable/ic_more" />
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/txtSave"
-                style="@style/ActionbarButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/imgReset"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ripple_skip">
+
+            <ImageView
+                android:layout_width="@dimen/width_main_button"
+                android:layout_height="@dimen/width_main_button"
                 android:layout_gravity="center"
-                android:text="@string/action_save" />
+                android:src="@drawable/ic_reset" />
         </FrameLayout>
     </LinearLayout>
 
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_weight="1"
-        android:padding="@dimen/padding_10">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/imgOpen"
-            android:layout_width="@dimen/width_main_button"
-            android:layout_height="@dimen/width_main_button"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_open" />
-    </FrameLayout>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ripple_skip">
+
+            <ImageView
+                android:layout_width="@dimen/width_main_button"
+                android:layout_height="@dimen/width_main_button"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/imgSave"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ripple_skip">
+
+            <ImageView
+                android:layout_width="@dimen/width_main_button"
+                android:layout_height="@dimen/width_main_button"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_save" />
+        </FrameLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

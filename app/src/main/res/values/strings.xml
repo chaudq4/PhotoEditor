@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhotoEditor</string>
+    <string name="app_name">GOMPE</string>
     <string name="activity_title_main">Filters</string>
     <string name="action_settings">Settings</string>
     <string name="filters">FILTERS</string>
@@ -31,4 +31,33 @@
     <string name="save_message_dialog">Do you want to save edited image?</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
+
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
+
+    <string name="slide_1_title">Hello Food!</string>
+    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+
+    <string name="slide_2_title">Movie Tickets</string>
+    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+
+    <string name="slide_3_title">Great Discounts</string>
+    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+
+    <string name="slide_4_title">World Travel</string>
+    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+    <string name="title_intro1"> Be YourSelf </string>
+    <string name="content_intro1">Everyone else is already taken</string>
+    <string name="title_intro2"> Colorful </string>
+    <string name="content_intro2">Photography is all about the light, composition and, most importantly, emotion</string>
+    <string name="title_intro3"> Moment </string>
+    <string name="content_intro3">Capture the world full of possibilities in one click</string>
+    <string name="title_intro4"> Everything </string>
+    <string name="content_intro4">For a good photographer, every subject is photogenic</string>
 </resources>

@@ -71,7 +71,7 @@ public class ThumbnailsAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
         if (selectedIndex == position) {
             holder.txtNameFilter.setTextColor(ContextCompat.getColor(mContext, R.color.filter_label_selected));
         } else {
-            holder.txtNameFilter.setTextColor(ContextCompat.getColor(mContext, R.color.filter_label_normal));
+            holder.txtNameFilter.setTextColor(ContextCompat.getColor(mContext, R.color.gray));
         }
     }
 

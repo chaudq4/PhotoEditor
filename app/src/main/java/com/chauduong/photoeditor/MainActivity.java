@@ -6,15 +6,22 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chauduong.photoeditor.Adapter.ViewPagerAdapter;
 import com.chauduong.photoeditor.Fragment.AdjusmentFragment;
+import com.chauduong.photoeditor.Fragment.ColorFragment;
+import com.chauduong.photoeditor.Fragment.DetailFragment;
+import com.chauduong.photoeditor.Fragment.EffectFragment;
 import com.chauduong.photoeditor.Fragment.ToneFragment;
 import com.chauduong.photoeditor.Interface.ActionbarListener;
 import com.chauduong.photoeditor.Interface.AdjusmentListener;
@@ -56,10 +63,15 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    @BindView(R.id.llSample)
+    LinearLayout llSample;
 
     AdjusmentFragment adjusmentFragment;
     FiltersListFragment filtersListFragment;
     ToneFragment editImageFragment;
+    ColorFragment colorFragment;
+    EffectFragment effectFragment;
+    DetailFragment detailFragment;
 
     ImageManager mImageManager;
     DialogManager mDialogManager;
@@ -83,7 +95,9 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         ButterKnife.bind(this);
         setupViewPager(viewPager);
         initManager();
+        Utils.setFullScreen(this);
     }
+
 
     private void initManager() {
         mActionbarManager = new ActionbarManager(this);
@@ -98,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
 
-        adjusmentFragment = new AdjusmentFragment(this, R.drawable.ic_adjusment);
+        adjusmentFragment = new AdjusmentFragment(this, R.drawable.ic_adjustment);
         adjusmentFragment.setmAdjusmentListener(this);
 
         // adding filter list fragment
@@ -108,13 +122,21 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         // adding edit image fragment
         editImageFragment = new ToneFragment(this, R.drawable.ic_tone);
         editImageFragment.setListener(this);
+        //
+        colorFragment= new ColorFragment(this, R.drawable.ic_color);
+        effectFragment= new EffectFragment(this, R.drawable.ic_effect);
+        detailFragment= new DetailFragment(this, R.drawable.ic_detail);
 
         adapter.addFragment(adjusmentFragment, null);
         adapter.addFragment(filtersListFragment, getString(R.string.tab_filters));
         adapter.addFragment(editImageFragment, getString(R.string.tab_edit));
+        adapter.addFragment(colorFragment,null);
+        adapter.addFragment(effectFragment,null);
+        adapter.addFragment(detailFragment,null);
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         addObserver(filtersListFragment);
         addObserver(editImageFragment);
         addObserver(adjusmentFragment);
@@ -150,9 +172,10 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         if (resultCode == RESULT_OK && requestCode == SELECT_GALLERY_IMAGE) {
             mImageManager.setFilePath(data.getData());
             mImageManager.initOriginalBitmap();
-            Bitmap bitmap= mImageManager.getmOriginal().copy(Bitmap.Config.ARGB_8888,true);
+            Bitmap bitmap = mImageManager.getmOriginal().copy(Bitmap.Config.ARGB_8888, true);
             if (bitmap != null) {
                 mPreviewImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                llSample.setVisibility(View.GONE);
                 mPreviewManager.setImage(mPreviewImage);
                 bitmap.recycle();
             }
@@ -193,10 +216,10 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     @Override
     public void onActionbarClick(View view) {
         switch (view.getId()) {
-            case R.id.txtSave:
+            case R.id.imgSave:
                 mDialogManager.showDialog(DialogManager.SAVE_DIALOG);
                 break;
-            case R.id.txtReset:
+            case R.id.imgReset:
                 EditorManager.resetAll();
                 notifyObserver(BEHAVIOR_RESET);
                 mImageManager.applyBitmap();
@@ -244,9 +267,5 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         mImageManager.applyBitmap();
     }
 
-    @Override
-    public void onFlipY(boolean isFlipY) {
-        EditorManager.setIsFlipY(isFlipY);
-        mImageManager.applyBitmap();
-    }
+
 }

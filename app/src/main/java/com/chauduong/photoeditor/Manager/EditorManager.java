@@ -12,7 +12,6 @@ public class EditorManager {
     static float contrastFinal = 1;
     static int degress =0;
     static boolean isFilpX =false;
-    static boolean isFlipY=false;
 
     public static boolean isIsFilpX() {
         return isFilpX;
@@ -22,13 +21,7 @@ public class EditorManager {
         EditorManager.isFilpX = isFilpX;
     }
 
-    public static boolean isIsFlipY() {
-        return isFlipY;
-    }
 
-    public static void setIsFlipY(boolean isFlipY) {
-        EditorManager.isFlipY = isFlipY;
-    }
 
     public static int getDegress() {
         return degress;
@@ -78,7 +71,6 @@ public class EditorManager {
         contrastFinal = 1.0f;
         degress =0;
         isFilpX=false;
-        isFlipY=false;
     }
 
     public static void showAllEdit() {
@@ -86,7 +78,7 @@ public class EditorManager {
     }
 
     public static boolean isHasChange() {
-        if (!Utils.isEqual(degress,0)||(filter != null && filter.getName() != null) ||isIsFilpX()||isIsFlipY()
+        if (!Utils.isEqual(degress,0)||(filter != null && filter.getName() != null) ||isIsFilpX()
                 || !Utils.isEqual(saturationFinal * 10, 10) || !Utils.isEqual(10, contrastFinal * 10) || !Utils.isEqual(brightnessFinal, 0)) {
             return true;
         }

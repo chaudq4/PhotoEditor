@@ -1,48 +1,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black"
-    android:gravity="center"
+    android:background="@color/white"
+    android:gravity="bottom|center_horizontal"
     android:orientation="horizontal">
 
     <FrameLayout
+        android:id="@+id/imbRotate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ripple_skip"
         android:padding="@dimen/padding_10">
 
-        <ImageButton
-            android:id="@+id/imbRotate"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/black"
             android:src="@drawable/ic_rotate" />
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/imbFlipX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/ripple_skip"
         android:padding="@dimen/padding_10">
 
-        <ImageButton
-            android:id="@+id/imbFlipX"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/black"
             android:src="@drawable/ic_flip" />
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_10">
-
-        <ImageButton
-            android:id="@+id/imbFlipY"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:rotation="90"
-            android:src="@drawable/ic_flip" />
-    </FrameLayout>
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.chauduong.photoeditor.Manager;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,19 +17,20 @@ import butterknife.OnClick;
 
 public class ActionbarManager implements View.OnClickListener {
     Context mContext;
-    TextView txtSave;
-    TextView txtReset;
-    ImageView imgOpen;
-    ImageView imgMore;
+    @BindView(R.id.imgReset)
+    FrameLayout txtReset;
+    @BindView(R.id.imgOpen)
+    FrameLayout imgOpen;
+    @BindView(R.id.imgMore)
+    FrameLayout imgMore;
+    @BindView(R.id.imgSave)
+    FrameLayout imgSave;
     ActionbarListener mActionbarListener;
 
     public ActionbarManager(Context mContext) {
         this.mContext = mContext;
-        txtSave=((Activity) mContext).findViewById(R.id.txtSave);
-        txtReset=((Activity) mContext).findViewById(R.id.txtReset);
-        imgOpen=((Activity) mContext).findViewById(R.id.imgOpen);
-        imgMore=((Activity) mContext).findViewById(R.id.imgMore);
-        txtSave.setOnClickListener(this);
+        ButterKnife.bind(this, (Activity) mContext);
+        imgSave.setOnClickListener(this);
         txtReset.setOnClickListener(this);
         imgOpen.setOnClickListener(this);
         imgMore.setOnClickListener(this);
@@ -41,13 +43,13 @@ public class ActionbarManager implements View.OnClickListener {
         this.mActionbarListener = mActionbarListener;
     }
 
-    public void enableSave(boolean isEnable){
-        txtSave.setClickable(isEnable);
-        txtSave.setTextColor(isEnable?mContext.getColor(R.color.white):mContext.getColor(R.color.dim));
+    public void enableSave(boolean isEnable) {
+        imgSave.setClickable(isEnable);
+//        imgSave.setTextColor(isEnable ? mContext.getColor(R.color.white) : mContext.getColor(R.color.dim));
     }
-    public void enabaleReset(boolean isEnable){
+
+    public void enabaleReset(boolean isEnable) {
         txtReset.setClickable(isEnable);
-        txtReset.setTextColor(isEnable?mContext.getColor(R.color.white):mContext.getColor(R.color.dim));
     }
 
     @Override
