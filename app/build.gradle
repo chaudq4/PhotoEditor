@@ -50,5 +50,6 @@ dependencies {
 
     // dexter M permissions
     implementation 'com.karumi:dexter:4.1.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
 }

@@ -18,4 +18,7 @@ public class PreviewManager {
             imgPreview.post(() -> imgPreview.setImageBitmap(bitmap));
         }
     }
+    public void initPreview(){
+
+    }
 }

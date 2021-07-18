@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -14,6 +15,7 @@ import android.util.Log;
 
 import com.chauduong.photoeditor.Interface.ImageManagerListener;
 import com.chauduong.photoeditor.Utils.BitmapUtils;
+import com.chauduong.photoeditor.Utils.Utils;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -29,6 +31,7 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Random;
 
+import static com.chauduong.photoeditor.MainActivity.SCALE;
 import static com.chauduong.photoeditor.MainActivity.SELECT_GALLERY_IMAGE;
 
 public class ImageManager {
@@ -87,13 +90,8 @@ public class ImageManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Bitmap bitmap = BitmapUtils.getBitmapFromGallery(mContext, filePath, 1);
-                bitmap = EditorManager.getFilter().processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
-                Filter myFilter = new Filter();
-                myFilter.addSubFilter(new BrightnessSubFilter(EditorManager.getBrightnessFinal()));
-                myFilter.addSubFilter(new ContrastSubFilter(EditorManager.getContrastFinal()));
-                myFilter.addSubFilter(new SaturationSubfilter(EditorManager.getSaturationFinal()));
-                final Bitmap finalBitmap = myFilter.processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+                Bitmap original = BitmapUtils.getBitmapFromGallery(mContext, filePath, 1);
+                Bitmap finalBitmap = applyEditor(original);
                 String root = Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES).toString();
                 File myDir = new File(root + "/saved_images");
@@ -174,20 +172,16 @@ public class ImageManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Bitmap bitmap =mOriginal.copy(Bitmap.Config.ARGB_8888,true);
-                if (EditorManager.getFilter() != null)
-                    bitmap = EditorManager.getFilter().processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
-                Filter myFilter = new Filter();
-                myFilter.addSubFilter(new BrightnessSubFilter(EditorManager.getBrightnessFinal()));
-                myFilter.addSubFilter(new ContrastSubFilter(EditorManager.getContrastFinal()));
-                myFilter.addSubFilter(new SaturationSubfilter(EditorManager.getSaturationFinal()));
-                EditorManager.showAllEdit();
-                mPreview = myFilter.processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+                Bitmap original = mOriginal.copy(Bitmap.Config.ARGB_8888, true);
+                Bitmap finalBitmap = applyEditor(original);
+                mPreview = finalBitmap;
                 mImageManagerListener.onDoneApply();
+
             }
         }).start();
     }
-    public Bitmap getPreView(){
+
+    public Bitmap getPreView() {
         return mPreview;
     }
 
@@ -197,5 +191,31 @@ public class ImageManager {
 
     public Bitmap getmOriginal() {
         return mOriginal;
+    }
+
+    private Bitmap applyEditor(Bitmap bitmap) {
+        final Bitmap finalBitmap;
+        if (EditorManager.getFilter() != null)
+            bitmap = EditorManager.getFilter().processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+        Filter myFilter = new Filter();
+        myFilter.addSubFilter(new BrightnessSubFilter(EditorManager.getBrightnessFinal()));
+        myFilter.addSubFilter(new ContrastSubFilter(EditorManager.getContrastFinal()));
+        myFilter.addSubFilter(new SaturationSubfilter(EditorManager.getSaturationFinal()));
+        bitmap = myFilter.processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+        Matrix matrix = new Matrix();
+        matrix.postRotate(EditorManager.getDegress());
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        boolean isFlipX=EditorManager.isIsFilpX();
+        boolean isFlipY=EditorManager.isIsFlipY();
+        Log.i("chau", "applyEditor: "+ isFlipX+" "+ isFlipY);
+        matrix= new Matrix();
+        matrix.postScale(isFlipX ? -1 : 1, isFlipY ? -1 : 1, bitmap.getWidth() / 2f, bitmap.getHeight() / 2f);
+        finalBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return finalBitmap;
+    }
+    public void initOriginalBitmap(){
+        if(filePath!=null){
+            mOriginal=BitmapUtils.getBitmapFromGallery(mContext, filePath, SCALE);
+        }
     }
 }

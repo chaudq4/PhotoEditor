@@ -9,4 +9,9 @@
     <dimen name="lbl_edit_image_control">100dp</dimen>
     <dimen name="width_tone">36dp</dimen>
     <dimen name="width_main_button">24dp</dimen>
+    <dimen name="size_title_save_dialog">20dp</dimen>
+    <dimen name="size_message_save_dialog">16dp</dimen>
+    <dimen name="size_button_save_dialog">18dp</dimen>
+    <dimen name="margin_title_save_dialog">30dp</dimen>
+    <dimen name="width_adjusment">24dp</dimen>
 </resources>

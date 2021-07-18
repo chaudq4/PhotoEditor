@@ -14,8 +14,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.chauduong.photoeditor.Adapter.ViewPagerAdapter;
+import com.chauduong.photoeditor.Fragment.AdjusmentFragment;
 import com.chauduong.photoeditor.Fragment.ToneFragment;
 import com.chauduong.photoeditor.Interface.ActionbarListener;
+import com.chauduong.photoeditor.Interface.AdjusmentListener;
+import com.chauduong.photoeditor.Interface.DialogManagerListener;
 import com.chauduong.photoeditor.Interface.EditImageFragmentListener;
 import com.chauduong.photoeditor.Interface.FiltersListFragmentListener;
 import com.chauduong.photoeditor.Interface.ImageManagerListener;
@@ -37,7 +40,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements FiltersListFragmentListener, EditImageFragmentListener, ImageManagerListener, ActionbarListener {
+public class MainActivity extends AppCompatActivity implements FiltersListFragmentListener, EditImageFragmentListener, ImageManagerListener, ActionbarListener, DialogManagerListener, AdjusmentListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -54,16 +57,19 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-
+    AdjusmentFragment adjusmentFragment;
     FiltersListFragment filtersListFragment;
     ToneFragment editImageFragment;
+
     ImageManager mImageManager;
     DialogManager mDialogManager;
     PreviewManager mPreviewManager;
     ActionbarManager mActionbarManager;
-    Bitmap mPreviewImage;
-    List<MainActivityListener> mainActivityListeners;
 
+    Bitmap mPreviewImage;
+
+    List<MainActivityListener> mainActivityListeners;
+    ViewPagerAdapter adapter;
 
     // load native image filters library
     static {
@@ -83,22 +89,27 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         mActionbarManager = new ActionbarManager(this);
         mActionbarManager.setmActionbarListener(this);
         mDialogManager = new DialogManager(this);
+        mDialogManager.setmDialogManagerListener(this);
         mImageManager = new ImageManager(mDialogManager, this);
         mImageManager.setmImageManagerListener(this);
         mPreviewManager = new PreviewManager(this, imagePreview);
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
+
+        adjusmentFragment = new AdjusmentFragment(this, R.drawable.ic_adjusment);
+        adjusmentFragment.setmAdjusmentListener(this);
 
         // adding filter list fragment
-        filtersListFragment = new FiltersListFragment();
+        filtersListFragment = new FiltersListFragment(this, R.drawable.ic_filter);
         filtersListFragment.setmFiltersListFragmentListener(this);
 
         // adding edit image fragment
-        editImageFragment = new ToneFragment(this);
+        editImageFragment = new ToneFragment(this, R.drawable.ic_tone);
         editImageFragment.setListener(this);
 
+        adapter.addFragment(adjusmentFragment, null);
         adapter.addFragment(filtersListFragment, getString(R.string.tab_filters));
         adapter.addFragment(editImageFragment, getString(R.string.tab_edit));
 
@@ -106,7 +117,9 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         tabLayout.setupWithViewPager(viewPager);
         addObserver(filtersListFragment);
         addObserver(editImageFragment);
+        addObserver(adjusmentFragment);
     }
+
 
     @Override
     public void onFilterSelected(Filter filter) {
@@ -136,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == SELECT_GALLERY_IMAGE) {
             mImageManager.setFilePath(data.getData());
-            Bitmap bitmap = BitmapUtils.getBitmapFromGallery(this, data.getData(), SCALE);
-            mImageManager.setmOriginal(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+            mImageManager.initOriginalBitmap();
+            Bitmap bitmap= mImageManager.getmOriginal().copy(Bitmap.Config.ARGB_8888,true);
             if (bitmap != null) {
                 mPreviewImage = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                 mPreviewManager.setImage(mPreviewImage);
@@ -181,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
     public void onActionbarClick(View view) {
         switch (view.getId()) {
             case R.id.txtSave:
-                mImageManager.saveImageToGallery();
+                mDialogManager.showDialog(DialogManager.SAVE_DIALOG);
                 break;
             case R.id.txtReset:
                 EditorManager.resetAll();
@@ -205,5 +218,35 @@ public class MainActivity extends AppCompatActivity implements FiltersListFragme
             if (behavior == BEHAVIOR_RESET)
                 listener.onResetClick();
         }
+    }
+
+    @Override
+    public void onClickOKSave() {
+        mImageManager.saveImageToGallery();
+        mDialogManager.dissmissDialog();
+    }
+
+    @Override
+    public void onClickCancelSave() {
+        mDialogManager.dissmissDialog();
+
+    }
+
+    @Override
+    public void onRotateClick(int degress) {
+        EditorManager.setDegress(degress);
+        mImageManager.applyBitmap();
+    }
+
+    @Override
+    public void onFlipX(boolean isFlipX) {
+        EditorManager.setIsFilpX(isFlipX);
+        mImageManager.applyBitmap();
+    }
+
+    @Override
+    public void onFlipY(boolean isFlipY) {
+        EditorManager.setIsFlipY(isFlipY);
+        mImageManager.applyBitmap();
     }
 }

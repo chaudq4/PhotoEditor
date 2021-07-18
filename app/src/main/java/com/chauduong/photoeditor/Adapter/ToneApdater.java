@@ -49,14 +49,14 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
     public void onBindViewHolder(@NonNull ToneHolder holder, int position) {
         holder.imgToneItem.setImageResource(toneItemList.get(position).getDrawable());
         setMaxProgress(holder.sbToneValue, toneItemList.get(position).getState());
-        holder.sbToneValue.setProgress((int) (toneItemList.get(position).getState() == 1 ? (toneItemList.get(position).getValue() + 100) : (toneItemList.get(position).getValue() * 10)));
+        holder.sbToneValue.setProgress((int) (toneItemList.get(position).getState() == 1 ? (toneItemList.get(position).getValue() + 100) : (toneItemList.get(position).getValue() * 100)));
         setTextValueInit(holder.txtToneValue, toneItemList.get(position));
         holder.sbToneValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 updateValueTone(progress, position);
                 boolean isBrightness = toneItemList.get(position).getState() == 1;
-                holder.txtToneValue.setText(String.valueOf(isBrightness ? progress - 100 : progress - 10));
+                holder.txtToneValue.setText(String.valueOf(isBrightness ? progress - 100 : progress - 100));
                 mToneItemListener.onToneChange();
             }
 
@@ -119,12 +119,12 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
                 tone.setValue(value - 100);
                 break;
             case CONTRAST_STATE:
-                EditorManager.setContrastFinal(value / 10);
-                tone.setValue(value / 10);
+                EditorManager.setContrastFinal(value / 100);
+                tone.setValue(value / 100);
                 break;
             case SATURATION_STATE:
-                EditorManager.setSaturationFinal(value / 10);
-                tone.setValue(value / 10);
+                EditorManager.setSaturationFinal(value / 100);
+                tone.setValue(value / 100);
                 break;
         }
     }
@@ -139,10 +139,10 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
                 txtToneValue.setText(String.valueOf((int) (toneItem.getValue())));
                 break;
             case CONTRAST_STATE:
-                txtToneValue.setText(String.valueOf((int) (toneItem.getValue() * 10) - 10));
+                txtToneValue.setText(String.valueOf((int) (toneItem.getValue() * 100) - 100));
                 break;
             case SATURATION_STATE:
-                txtToneValue.setText(String.valueOf((int) (toneItem.getValue() * 10) - 10));
+                txtToneValue.setText(String.valueOf((int) (toneItem.getValue() * 100) - 100));
                 break;
         }
     }
@@ -154,11 +154,11 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
                 seekBar.setMin(0);
                 break;
             case CONTRAST_STATE:
-                seekBar.setMax(30);
+                seekBar.setMax(300);
                 seekBar.setMin(0);
                 break;
             case SATURATION_STATE:
-                seekBar.setMax(30);
+                seekBar.setMax(300);
                 seekBar.setMin(0);
                 break;
         }

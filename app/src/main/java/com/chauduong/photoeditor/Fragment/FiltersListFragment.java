@@ -1,7 +1,9 @@
 package com.chauduong.photoeditor.Fragment;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.chauduong.photoeditor.Interface.ThumbnailsAdapterListener;
 import com.chauduong.photoeditor.MainActivity;
 import com.chauduong.photoeditor.R;
 import com.chauduong.photoeditor.Utils.BitmapUtils;
+import com.chauduong.photoeditor.Utils.Utils;
 import com.chauduong.photoeditor.View.SpacesItemDecoration;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
@@ -33,12 +36,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FiltersListFragment extends Fragment implements ThumbnailsAdapterListener, MainActivityListener {
-    static final int SIZE_THUMBNAIL=100;
-
+public class FiltersListFragment extends FragmentCustom implements ThumbnailsAdapterListener, MainActivityListener {
+    static final int SIZE_THUMBNAIL = 80;
     @BindView(R.id.recycler_view)
     RecyclerView rvThumbnail;
-
+    Context mContext;
     private ThumbnailsAdapter mThumbnailsAdapter;
     private List<ThumbnailItem> mListThumbnailItems;
     private FiltersListFragmentListener mFiltersListFragmentListener;
@@ -47,7 +49,9 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapterLi
         this.mFiltersListFragmentListener = mFiltersListFragmentListener;
     }
 
-    public FiltersListFragment() {
+    public FiltersListFragment(Context mContext, int resoure) {
+        this.mContext = mContext;
+        this.iconDrawable = resoure;
     }
 
     @Override
@@ -61,13 +65,15 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapterLi
         View view = inflater.inflate(R.layout.fragment_filters_list, container, false);
         ButterKnife.bind(this, view);
         initView();
-        prepareThumbnail(null);
+        Log.i("chau", "onCreateView: null");
         return view;
     }
 
     private void initView() {
-        mListThumbnailItems = new ArrayList<>();
-        mThumbnailsAdapter = new ThumbnailsAdapter(mListThumbnailItems, getContext());
+        if (mListThumbnailItems == null)
+            mListThumbnailItems = new ArrayList<>();
+        if (mThumbnailsAdapter == null)
+            mThumbnailsAdapter = new ThumbnailsAdapter(mListThumbnailItems, getContext());
         mThumbnailsAdapter.setListener(this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvThumbnail.setLayoutManager(mLayoutManager);
@@ -80,7 +86,7 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapterLi
     public void prepareThumbnail(final Bitmap bitmap) {
         Runnable r = new Runnable() {
             public void run() {
-                if (bitmap==null) return;
+                if (bitmap == null) return;
                 Bitmap thumbImage = Bitmap.createScaledBitmap(bitmap, SIZE_THUMBNAIL, SIZE_THUMBNAIL, false);
                 if (thumbImage == null)
                     return;
@@ -117,6 +123,7 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapterLi
 
         new Thread(r).start();
     }
+
     @Override
     public void onFilterSelected(Filter filter) {
         if (mFiltersListFragmentListener != null)

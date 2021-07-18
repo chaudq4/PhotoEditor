@@ -27,4 +27,8 @@
     <string name="brightness">Brightness</string>
     <string name="contrast">Contrast</string>
     <string name="saturation">Saturation</string>
+    <string name="save_title_dialog">Save to gallery</string>
+    <string name="save_message_dialog">Do you want to save edited image?</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>

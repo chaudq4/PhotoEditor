@@ -1,4 +1,4 @@
-package com.chauduong.photoeditor.Manager;
+package com.chauduong.photoeditor.Interface;
 
 public interface MainListener {
     void onResetClick();

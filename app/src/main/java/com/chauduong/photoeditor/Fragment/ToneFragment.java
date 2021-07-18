@@ -21,7 +21,7 @@ import com.chauduong.photoeditor.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ToneFragment extends Fragment implements ToneItemListener, MainActivityListener {
+public class ToneFragment extends FragmentCustom implements ToneItemListener, MainActivityListener {
     public static final int BRIGHTNESS_STATE = 1;
     public static final int CONTRAST_STATE = 2;
     public static final int SATURATION_STATE = 3;
@@ -30,12 +30,12 @@ public class ToneFragment extends Fragment implements ToneItemListener, MainActi
     @BindView(R.id.rvTone)
     RecyclerView rvTone;
     ToneApdater mToneApdater;
-
     public void setListener(EditImageFragmentListener listener) {
         this.mEditImageFragmentListener = listener;
     }
 
-    public ToneFragment(Context mContext) {
+    public ToneFragment(Context mContext, int resource) {
+        this.iconDrawable=resource;
         // Required empty public constructor
         mToneApdater = new ToneApdater(mContext);
         mToneApdater.setmToneItemListener(this);
