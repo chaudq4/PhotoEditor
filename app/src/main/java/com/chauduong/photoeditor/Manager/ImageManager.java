@@ -15,7 +15,6 @@ import android.util.Log;
 
 import com.chauduong.photoeditor.Interface.ImageManagerListener;
 import com.chauduong.photoeditor.Utils.BitmapUtils;
-import com.chauduong.photoeditor.Utils.Utils;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -199,7 +198,7 @@ public class ImageManager {
         if (EditorManager.getFilter() != null)
             bitmap = EditorManager.getFilter().processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));
         Filter myFilter = new Filter();
-        myFilter.addSubFilter(new BrightnessSubFilter(EditorManager.getBrightnessFinal()));
+        myFilter.addSubFilter(new BrightnessSubFilter(EditorManager.getExposureFinal()));
         myFilter.addSubFilter(new ContrastSubFilter(EditorManager.getContrastFinal()));
         myFilter.addSubFilter(new SaturationSubfilter(EditorManager.getSaturationFinal()));
         bitmap = myFilter.processFilter(bitmap.copy(Bitmap.Config.ARGB_8888, true));

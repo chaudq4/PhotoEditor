@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.chauduong.photoeditor.Model.ToneItem;
 
-import static com.chauduong.photoeditor.Fragment.ToneFragment.BRIGHTNESS_STATE;
+import static com.chauduong.photoeditor.Fragment.ToneFragment.EXPOSURE_STATE;
 import static com.chauduong.photoeditor.Fragment.ToneFragment.CONTRAST_STATE;
 import static com.chauduong.photoeditor.Fragment.ToneFragment.SATURATION_STATE;
 
@@ -21,7 +21,7 @@ public class Utils {
     public static void setProgressBar(SeekBar sb, ToneItem toneItem) {
         int value = 0;
         switch (toneItem.getState()) {
-            case BRIGHTNESS_STATE:
+            case EXPOSURE_STATE:
                 value = (int) toneItem.getValue();
                 break;
             case CONTRAST_STATE:
@@ -37,7 +37,7 @@ public class Utils {
 
     public static void setTextValueTone(TextView textView, float value, int currentState) {
         switch (currentState) {
-            case BRIGHTNESS_STATE:
+            case EXPOSURE_STATE:
                 value = (int) value;
                 break;
             case CONTRAST_STATE:

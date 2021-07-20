@@ -9,7 +9,12 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -55,7 +60,7 @@ public class BitmapUtils {
         BitmapFactory.decodeFile(picturePath, options);
 
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, options.outWidth/SCALE, options.outHeight/SCALE);
+        options.inSampleSize = calculateInSampleSize(options, options.outWidth / SCALE, options.outHeight / SCALE);
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;

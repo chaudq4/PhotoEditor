@@ -1,21 +1,15 @@
 package com.chauduong.photoeditor;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chauduong.photoeditor.Adapter.ViewPagerAdapter;
 import com.chauduong.photoeditor.Fragment.AdjusmentFragment;
@@ -35,7 +29,6 @@ import com.chauduong.photoeditor.Manager.DialogManager;
 import com.chauduong.photoeditor.Manager.EditorManager;
 import com.chauduong.photoeditor.Manager.ImageManager;
 import com.chauduong.photoeditor.Manager.PreviewManager;
-import com.chauduong.photoeditor.Utils.BitmapUtils;
 import com.chauduong.photoeditor.Fragment.FiltersListFragment;
 import com.chauduong.photoeditor.Utils.Utils;
 import com.google.android.material.tabs.TabLayout;

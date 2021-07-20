@@ -7,7 +7,7 @@ import com.zomato.photofilters.imageprocessors.Filter;
 
 public class EditorManager {
     static Filter filter;
-    static int brightnessFinal = 0;
+    static int exposureFinal = 0;
     static float saturationFinal = 1;
     static float contrastFinal = 1;
     static int degress =0;
@@ -39,12 +39,12 @@ public class EditorManager {
         EditorManager.filter = filter;
     }
 
-    public static int getBrightnessFinal() {
-        return brightnessFinal;
+    public static int getExposureFinal() {
+        return exposureFinal;
     }
 
-    public static void setBrightnessFinal(int brightnessFinal) {
-        EditorManager.brightnessFinal = brightnessFinal;
+    public static void setExposureFinal(int exposureFinal) {
+        EditorManager.exposureFinal = exposureFinal;
     }
 
     public static float getSaturationFinal() {
@@ -66,7 +66,7 @@ public class EditorManager {
     public static void resetAll() {
         filter = new Filter();
         filter.setName(null);
-        brightnessFinal = 0;
+        exposureFinal = 0;
         saturationFinal = 1.0f;
         contrastFinal = 1.0f;
         degress =0;
@@ -74,12 +74,12 @@ public class EditorManager {
     }
 
     public static void showAllEdit() {
-        Log.i("chau", "showAllEdit: " + " " + brightnessFinal + " " + contrastFinal + " " + saturationFinal);
+        Log.i("chau", "showAllEdit: " + " " + exposureFinal + " " + contrastFinal + " " + saturationFinal);
     }
 
     public static boolean isHasChange() {
         if (!Utils.isEqual(degress,0)||(filter != null && filter.getName() != null) ||isIsFilpX()
-                || !Utils.isEqual(saturationFinal * 10, 10) || !Utils.isEqual(10, contrastFinal * 10) || !Utils.isEqual(brightnessFinal, 0)) {
+                || !Utils.isEqual(saturationFinal * 10, 10) || !Utils.isEqual(10, contrastFinal * 10) || !Utils.isEqual(exposureFinal, 0)) {
             return true;
         }
         return false;

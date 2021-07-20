@@ -24,7 +24,7 @@
     <string name="no_image">Please open a image to edit</string>
 
 
-    <string name="brightness">Brightness</string>
+    <string name="exposure">Exposure</string>
     <string name="contrast">Contrast</string>
     <string name="saturation">Saturation</string>
     <string name="save_title_dialog">Save to gallery</string>

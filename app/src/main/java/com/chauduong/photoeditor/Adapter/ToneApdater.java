@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.chauduong.photoeditor.Fragment.ToneFragment.BRIGHTNESS_STATE;
+import static com.chauduong.photoeditor.Fragment.ToneFragment.EXPOSURE_STATE;
 import static com.chauduong.photoeditor.Fragment.ToneFragment.CONTRAST_STATE;
 import static com.chauduong.photoeditor.Fragment.ToneFragment.SATURATION_STATE;
 
@@ -83,18 +83,18 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
 
     private void initToneItem() {
         toneItemList = new ArrayList<>();
-        toneItemList.add(new ToneItem(1, mContext.getResources().getString(R.string.brightness), 0, R.drawable.ic_brightness));
+        toneItemList.add(new ToneItem(1, mContext.getResources().getString(R.string.exposure), 0, R.drawable.ic_exposure));
         toneItemList.add(new ToneItem(2, mContext.getResources().getString(R.string.contrast), 1f, R.drawable.ic_contrast));
         toneItemList.add(new ToneItem(3, mContext.getResources().getString(R.string.saturation), 1f, R.drawable.ic_saturation));
     }
 
     public void resetAll() {
         for (ToneItem t : toneItemList) {
-            if (t.getState() == BRIGHTNESS_STATE)
+            if (t.getState() == EXPOSURE_STATE)
                 t.setValue(0);
             if (t.getState() == CONTRAST_STATE)
                 t.setValue(1f);
-            if (t.getState() == BRIGHTNESS_STATE)
+            if (t.getState() == EXPOSURE_STATE)
                 t.setValue(1f);
         }
 
@@ -102,8 +102,8 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
 
     public void updateValueTone() {
         for (ToneItem toneItem : toneItemList) {
-            if (toneItem.getState() == BRIGHTNESS_STATE)
-                toneItem.setValue(EditorManager.getBrightnessFinal());
+            if (toneItem.getState() == EXPOSURE_STATE)
+                toneItem.setValue(EditorManager.getExposureFinal());
             if (toneItem.getState() == CONTRAST_STATE)
                 toneItem.setValue(EditorManager.getContrastFinal());
             if (toneItem.getState() == SATURATION_STATE)
@@ -114,9 +114,9 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
     public void updateValueTone(float value, int position) {
         ToneItem tone = toneItemList.get(position);
         switch (tone.getState()) {
-            case BRIGHTNESS_STATE:
-                EditorManager.setBrightnessFinal((int) (value) - 100);
-                tone.setValue(value - 100);
+            case EXPOSURE_STATE:
+                EditorManager.setExposureFinal(((int) (value) - 100) );
+                tone.setValue(((int) (value) - 100) );
                 break;
             case CONTRAST_STATE:
                 EditorManager.setContrastFinal(value / 100);
@@ -135,7 +135,7 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
 
     private void setTextValueInit(TextView txtToneValue, ToneItem toneItem) {
         switch (toneItem.getState()) {
-            case BRIGHTNESS_STATE:
+            case EXPOSURE_STATE:
                 txtToneValue.setText(String.valueOf((int) (toneItem.getValue())));
                 break;
             case CONTRAST_STATE:
@@ -149,7 +149,7 @@ public class ToneApdater extends RecyclerView.Adapter<ToneHolder> {
 
     public void setMaxProgress(SeekBar seekBar, int currentState) {
         switch (currentState) {
-            case BRIGHTNESS_STATE:
+            case EXPOSURE_STATE:
                 seekBar.setMax(200);
                 seekBar.setMin(0);
                 break;

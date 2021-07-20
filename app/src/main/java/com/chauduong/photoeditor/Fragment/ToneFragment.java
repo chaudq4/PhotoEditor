@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ToneFragment extends FragmentCustom implements ToneItemListener, MainActivityListener {
-    public static final int BRIGHTNESS_STATE = 1;
+    public static final int EXPOSURE_STATE = 1;
     public static final int CONTRAST_STATE = 2;
     public static final int SATURATION_STATE = 3;
     private EditImageFragmentListener mEditImageFragmentListener;
